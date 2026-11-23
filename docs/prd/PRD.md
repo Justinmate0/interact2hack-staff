@@ -1,6 +1,6 @@
 # PRD · Herramienta de organización del staff del Interact2Hack
 
-**Versión:** borrador 1 · **Fecha:** 23 de noviembre de 2026 · **Equipo:** Justin Peñafiel
+**Versión:** 2 (revisado, ver `docs/prd/revision.md`) · **Fecha:** 23 de noviembre de 2026 · **Equipo:** Justin Peñafiel
 **Fuentes:** descripción del proyecto (`docs/fuentes/descripcion-proyecto.md`) y respuestas del cliente de la sesión del 11 de noviembre (`docs/cliente/preguntas.md`)
 
 Este documento dice qué debe hacer la herramienta y qué no. Cómo se construye se decide después, en las specs.
@@ -76,27 +76,27 @@ El cliente no dio cifras de éxito. Las medidas de arriba son comprobables en la
 | Id | Regla |
 | --- | --- |
 | R1 | Un usuario es administrador o staff, nunca los dos. |
-| R2 | No hay registro público. Solo un administrador crea usuarios. Para crear uno se piden tres datos: nombre completo, correo institucional y teléfono celular, además de su perfil. |
-| R3 | Existe un administrador master inicial, entregado al cliente. Crea a los primeros administradores y puede cambiar la contraseña de cualquiera. |
+| R2 | No hay registro público. Solo un administrador crea usuarios. Para crear uno se piden tres datos: nombre completo, correo institucional y teléfono celular, además de su perfil. Solo un administrador cambia esos datos; cada usuario cambia solo su contraseña [SUPUESTO S-18]. |
+| R3 | Existe un administrador master inicial, entregado al cliente. Crea a los primeros administradores y puede cambiar la contraseña de cualquiera. Nadie puede eliminar al master, y un administrador no puede eliminarse a sí mismo [SUPUESTO S-17]. |
 | R4 | El administrador pone la contraseña inicial. Cada usuario puede cambiarla desde su perfil. Si la olvida, puede recuperarla desde la pantalla de acceso con su correo, y también puede pedir a un administrador que se la cambie. |
-| R5 | Al crear o editar a un estudiante de staff, el administrador define en qué días y horas está disponible. Al asignar una tarea, solo aparecen los estudiantes disponibles en esa fecha y hora. |
+| R5 | Al crear o editar a un estudiante de staff, el administrador define en qué días y horas está disponible. Al asignar una tarea, solo aparecen los estudiantes disponibles en la fecha y hora de vencimiento de la tarea [SUPUESTO S-14]. |
 | R6 | Cuando un estudiante avisa fuera de la herramienta que no podrá asistir, el administrador cambia su disponibilidad para que no le asignen más tareas. |
 
 **Tareas**
 
 | Id | Regla |
 | --- | --- |
-| R7 | Una tarea tiene título, lugar, fecha y hora de vencimiento, checklist (pasos) y responsables. Los responsables pueden ser uno o varios, o ninguno: la tarea se puede guardar sin asignar. |
+| R7 | Una tarea tiene título (obligatorio) [SUPUESTO S-13], lugar, fecha y hora de vencimiento, checklist (pasos) y responsables. Los responsables pueden ser uno o varios, o ninguno: la tarea se puede guardar sin asignar. |
 | R8 | El lugar se escoge de una lista, no se escribe. La lista parte con cinco lugares: Casa Blanca, Salón Azul, Patio del Da Vinci, Teatro Calderón de la Barca y Teatro Shakespeare. Un administrador puede agregar más (por ejemplo, un aula específica). |
-| R9 | Una tarea está siempre en uno de cinco estados: **no asignado** (sin responsables), **pendiente** (con responsables, sin empezar), **en ejecución**, **completada** y **vencida**. |
+| R9 | Una tarea está siempre en uno de cinco estados: **no asignado** (sin responsables; si llega a su hora límite, pasa a vencida [SUPUESTO S-15]), **pendiente** (con responsables, sin empezar), **en ejecución**, **completada** y **vencida**. |
 | R10 | Una tarea pasa a **en ejecución** cuando un estudiante marca el primer paso de su checklist. Solo abrirla no la cambia de estado. |
 | R11 | Un estudiante solo puede tener una tarea en ejecución a la vez. Para empezar otra, debe terminar la actual. Puede abrir otras tareas para verlas, pero no marcar pasos hasta terminar la actual. |
 | R12 | Una tarea en ejecución queda bloqueada: ningún administrador puede editarla ni borrarla. |
 | R13 | Dos administradores no pueden editar la misma tarea al mismo tiempo. Mientras uno la tiene abierta para editar, la tarea figura como en edición y el otro administrador solo puede verla. |
-| R14 | Una tarea se completa cuando todos los pasos están marcados y el estudiante presiona finalizar. El sistema no deja finalizar con pasos sin marcar. Antes de completar pide una confirmación. |
+| R14 | Una tarea se completa cuando todos los pasos están marcados y el estudiante presiona finalizar. El sistema no deja finalizar con pasos sin marcar. Antes de completar pide una confirmación. Los pasos se pueden marcar en cualquier orden, y una tarea completada no se reabre ni se desmarca [SUPUESTO S-16]. |
 | R15 | Las observaciones son opcionales. Es la forma en que el staff avisa de un problema o sugiere algo a los administradores; el staff no puede crear tareas. |
-| R16 | Si una tarea tiene varios responsables, basta con que uno la complete: queda completada para todos y desaparece de las pendientes de los demás. Todos tienen la misma capacidad de ejecutarla. Se registra el nombre de quien la completó. |
-| R17 | Una tarea marcada como urgente no necesita responsables: queda abierta a todo el staff disponible. El primero que la completa se la adjudica y la cierra. |
+| R16 | Si una tarea tiene varios responsables, basta con que uno la complete: queda completada para todos y desaparece de las pendientes de los demás. Todos tienen la misma capacidad de ejecutarla. Se registra el nombre de quien la completó. Mientras uno la está ejecutando, los demás responsables la ven «en ejecución» con su nombre y no pueden marcar pasos [SUPUESTO S-12]. |
+| R17 | Una tarea marcada como urgente no necesita responsables: queda abierta a todo el staff disponible. El primero que marca un paso se la adjudica, y al completarla la cierra [SUPUESTO S-12]. |
 | R18 | El estudiante puede hacer sus tareas asignadas en el orden que quiera. Todas tienen la misma prioridad. |
 
 **Tiempos**
@@ -111,7 +111,7 @@ El cliente no dio cifras de éxito. Las medidas de arriba son comprobables en la
 
 | Id | Regla |
 | --- | --- |
-| R22 | La pantalla principal del administrador es un tablero de tarjetas, una por tarea, con su estado y un código de color. Se ordena así: vencidas, próximas a vencer (la que vence antes, primero), en ejecución, sin asignar y completadas. |
+| R22 | La pantalla principal del administrador es un tablero de tarjetas, una por tarea, con su estado y un código de color. Se ordena así: vencidas, próximas a vencer (la que vence antes, primero), en ejecución, pendientes (por hora límite), sin asignar y completadas. Una tarea pendiente o en ejecución a la que le falta menos de 1 hora va en «próximas a vencer» [SUPUESTO S-11]. |
 | R23 | Las tareas completadas se agrupan en una sección plegable al final del tablero y no se pueden borrar: quedan como registro. Una tarea eliminada se oculta pero no se pierde [SUPUESTO S-06]. |
 | R24 | El estudiante solo ve las tareas que le asignaron y las urgentes abiertas. Los administradores ven todas, incluidas las de otros administradores. |
 | R25 | El estudiante ve su historial de tareas realizadas. |
@@ -149,12 +149,23 @@ El cliente no dio cifras de éxito. Las medidas de arriba son comprobables en la
 | S-08 | Cada paso se guarda al marcarlo, no solo al finalizar. | El cliente dijo que el primer check pasa la tarea a en ejecución, lo que requiere que se registre en ese momento. | `[SUPUESTO]` |
 | S-09 | Seguimos la identidad visual del Interact2Hack que tenemos (brandboard "Señal neón"), a la espera de la carpeta de materiales que el cliente prometió. | El cliente pidió usar la identidad del evento; los colores bastan y el resto es libre. | `[SUPUESTO]` |
 | S-10 | Las medidas de éxito de la sección 3 son propuestas nuestras. | El cliente no dio cifras. | `[SUPUESTO]` |
+| S-11 | Una tarea pendiente a más de 1 hora de vencer va después de las en ejecución, ordenada por hora límite. | El cliente nombró los otros grupos pero no dónde van las pendientes. | `[SUPUESTO]` |
+| S-12 | Mientras un responsable ejecuta una tarea, los demás la ven en ejecución con su nombre y no marcan pasos. En una urgente, la reserva quien marca el primer paso. | El cliente quiso evitar que varios la completen a la vez y que haya que sincronizar. | `[SUPUESTO]` · preguntar |
+| S-13 | Toda tarea tiene un título obligatorio. | Sin título no se puede distinguir una tarea en la lista. La descripción no lo menciona. | `[SUPUESTO]` |
+| S-14 | La disponibilidad del staff se compara con la hora de vencimiento de la tarea. | La tarea solo tiene hora límite, no hora de inicio. | `[SUPUESTO]` |
+| S-15 | Una tarea sin responsables que llega a su hora límite pasa a vencida. | Es lo más simple y deja al administrador verla arriba del tablero. | `[SUPUESTO]` |
+| S-16 | Los pasos se marcan en cualquier orden, y una tarea completada es definitiva. | No se habló de orden de pasos ni de reabrir; el cliente solo dijo que las completadas no se borran. | `[SUPUESTO]` · preguntar |
+| S-17 | Nadie elimina al administrador master y un administrador no se elimina a sí mismo. | El cliente quiere un administrador de respaldo por si se pierde una clave. | `[SUPUESTO]` |
+| S-18 | Solo un administrador cambia nombre, correo y teléfono de un usuario. | El cliente dijo que el estudiante cambia su contraseña; no habló de otros datos. | `[SUPUESTO]` |
 
 **Puntos abiertos (para el cliente el 2 de diciembre):**
 
 - ¿Una tarea vencida se puede completar tarde, o solo después de que un administrador cambie la fecha? (S-02)
 - ¿Qué pasa con una tarea que vence mientras alguien la está ejecutando? (S-03)
 - ¿Qué pasa con las tareas ya completadas cuando se elimina a un usuario? (S-06)
+- Si una tarea en ejecución tiene más gente de la necesaria y está bloqueada, ¿cómo se reduce? El cliente pidió el bloqueo (R12) y también que un administrador la edite.
+- Si cambia la disponibilidad de un estudiante, ¿qué pasa con las tareas que ya tenía asignadas? (R6)
+- ¿Una tarea completada puede reabrirse si se hizo mal? (S-16)
 - ¿Cuántos estudiantes usarán la herramienta a la vez? No se habló y afecta el diseño de las listas.
 - Si se necesita un plan de pago de la base de datos, el cliente dijo que se pagaría un mes. No lo resolvemos aquí.
 
@@ -165,27 +176,27 @@ El cliente no dio cifras de éxito. Las medidas de arriba son comprobables en la
 | Regla | Origen |
 | --- | --- |
 | R1 | P-20 |
-| R2 | P-22 y descripción del proyecto (no hay registro) |
-| R3 | Respuesta nueva del cliente (usuario master) |
+| R2 | P-22, descripción del proyecto (no hay registro) y S-18 |
+| R3 | Respuesta nueva del cliente (usuario master) y S-17 |
 | R4 | P-22, P-23 y S-01 |
-| R5 | Respuesta nueva del cliente (disponibilidad) |
+| R5 | Respuesta nueva del cliente (disponibilidad) y S-14 |
 | R6 | Respuesta nueva del cliente (imprevistos) |
-| R7 | Descripción del proyecto (cómo crear tareas) y P-18 |
+| R7 | Descripción del proyecto (cómo crear tareas), P-18 y S-13 |
 | R8 | P-18 |
-| R9 | P-05 |
+| R9 | P-05 y S-15 |
 | R10 | P-05 y P-07 |
 | R11 | P-04 |
 | R12 | P-16 |
 | R13 | P-16 |
-| R14 | P-06 y descripción del proyecto (cómo completar una tarea) |
+| R14 | P-06, descripción del proyecto (cómo completar una tarea) y S-16 |
 | R15 | P-10 |
-| R16 | P-01, P-02 y P-14 |
-| R17 | Respuesta nueva del cliente (tareas urgentes) |
+| R16 | P-01, P-02, P-14 y S-12 |
+| R17 | Respuesta nueva del cliente (tareas urgentes) y S-12 |
 | R18 | P-09 |
 | R19 | P-13 y P-28 |
 | R20 | P-11, P-12, S-02 y S-03 |
 | R21 | Respuesta nueva del cliente (contador) |
-| R22 | P-15 y descripción del proyecto (tablero de cumplimiento) |
+| R22 | P-15, descripción del proyecto (tablero de cumplimiento) y S-11 |
 | R23 | P-17 y S-06 |
 | R24 | P-21 |
 | R25 | Respuesta nueva del cliente (historial) |
