@@ -47,14 +47,14 @@ Qué decía el PRD: al asignar, salen los disponibles «en esa fecha y hora». P
 
 ## Preguntas para el cliente
 
-Ordenadas por prioridad, para el 2 de diciembre:
+Ordenadas por prioridad, para el 2 de diciembre. Cada una va en palabras simples, para que el cliente conteste sí o no, o con un ejemplo:
 
-1. Una tarea vencida, ¿se puede completar tarde o solo después de que un administrador cambie la fecha? (S-02)
-2. Si una tarea en ejecución tiene más gente de la necesaria, ¿cómo se reduce si está bloqueada? (fila 2)
-3. Si una tarea vence mientras alguien la ejecuta, ¿conserva lo marcado y quién puede terminarla? (S-03)
-4. Si cambia la disponibilidad de un estudiante, ¿qué pasa con las tareas que ya tenía asignadas? (R6)
-5. Mientras un responsable ejecuta una tarea, ¿los demás la ven bloqueada con su nombre? (S-12)
-6. ¿Una tarea completada se puede reabrir si se hizo mal? (S-16)
-7. Si se elimina a un usuario, ¿su historial de tareas se conserva? (S-06)
-8. ¿Cuántos estudiantes usarán la herramienta a la vez?
-9. ¿Cada tarea lleva un título? ¿Qué otros datos debe tener? (S-13)
+1. Si una tarea ya venció y nadie la completó, ¿el estudiante todavía la puede completar tarde, o primero un administrador tiene que cambiarle la fecha? (S-02)
+2. Cuando una tarea está en ejecución se bloquea y nadie la edita. Pero si en esa tarea hay más estudiantes de los necesarios, ¿el administrador puede quitar gente aunque esté bloqueada? (fila 2)
+3. Si llega la hora de vencimiento mientras un estudiante está marcando los pasos, ¿se guarda lo que ya marcó y quién la puede terminar? (S-03)
+4. Si un estudiante cambia su disponibilidad después de que le asignaron una tarea, ¿la tarea se le queda o se le quita? (R6)
+5. Cuando un estudiante está ejecutando una tarea, ¿los otros responsables la ven bloqueada, con el nombre de quien la está haciendo? (S-12)
+6. Si una tarea completada quedó mal hecha, ¿se puede reabrir? (S-16)
+7. Si un administrador borra a un usuario, ¿sus tareas anteriores se quedan guardadas o se borran con él? (S-06)
+8. ¿Cuántos estudiantes van a usar la herramienta al mismo tiempo durante el evento?
+9. ¿Cada tarea lleva un título? ¿Qué otros datos necesita, además de fecha, hora y lugar? (S-13)
