@@ -1,8 +1,8 @@
 # DESIGN.md · Staff Interact2Hack
 
-Sistema de diseño **«Claro y directo»**, versión 1.0 (noviembre 2026). Es la herramienta de organización del staff del Interact2Hack, con la identidad visual del evento (morado, lima y negro).
+Sistema de diseño **«Claro y directo»**, versión 1.1 (25 de noviembre de 2026). Es el de la herramienta de organización del staff del Interact2Hack, con la identidad visual del evento (morado, lima y negro). Viene en dos temas: **claro** (el de siempre, con bloques negros y lima para que se sienta del evento) y **oscuro** (negro de fondo, morado y lima neón).
 
-Este archivo es la fuente de verdad de cómo se **ve** y se **siente** la herramienta. No define funcionalidad: eso lo dice el PRD (`docs/prd/PRD.md`). Cuando una tarea toque la interfaz, el agente lee este archivo antes de escribir código.
+Este archivo es la fuente de verdad de cómo se **ve** y se **siente** la herramienta. No define funcionalidad (eso lo dice el PRD, `docs/prd/PRD.md`). Cuando una tarea toque la interfaz, el agente lee este archivo antes de escribir código.
 
 ## 1. Cómo se usa este archivo
 
@@ -29,19 +29,24 @@ El proceso que llevó a estas decisiones está en `docs/diseno/brief.md` y `docs
 1. **Qué hacer y hasta cuándo, primero.** En cada tarea lo primero que se lee es su estado, su título, su lugar y su hora límite.
 2. **Nunca solo color.** Todo estado lleva icono y texto. El color refuerza; no informa por sí solo.
 3. **Una acción por pantalla.** Un solo botón primario visible. En el celular, la acción principal queda al alcance del pulgar.
-4. **El morado es la acción; el lima es lo que está en curso.** El lima marca únicamente el estado «En ejecución». Nunca es texto ni borde sobre fondo claro.
+4. **El morado es la acción; el lima es lo que está en curso.** El lima marca el estado «En ejecución» y, sobre negro, sirve de acento (cifras, opción activa). Nunca es texto ni borde sobre fondo claro.
 5. **Plano y claro.** Sin sombras ni degradados decorativos. La jerarquía sale del tamaño, el peso, el borde y el espacio.
 6. **El celular manda.** Se diseña primero para 390 px; el escritorio reutiliza los mismos componentes con más densidad.
+7. **Dos temas, los mismos componentes.** Cada token tiene un valor claro y uno oscuro. Los componentes solo usan tokens, así que cambian de tema sin tocarlos.
 
 ## 4. Decisiones de diseño
 
 | Decisión | Por qué |
 | --- | --- |
-| Tema claro con fondo lila muy suave | El staff usa el celular de pie y a veces al aire libre; el claro se lee mejor con luz fuerte. Fue la razón para elegir la dirección B (`criticas/critica-direccion-b.md`). |
+| Tema claro por defecto, con fondo lila muy suave | El staff usa el celular de pie y a veces al aire libre, y el claro se lee mejor con luz fuerte. Fue la razón para elegir la dirección B (`criticas/critica-direccion-b.md`). |
+| Bloques negros dentro del tema claro | Un claro "a secas" no se sentía del Interact2Hack. La franja del logo, la barra inferior del celular y el panel de indicadores del tablero van en negro, con lima y blanco encima. |
+| Modo oscuro que sigue al sistema, con interruptor | El staff también trabaja de noche en el evento. El tema se toma de la preferencia del celular o la computadora, y el usuario lo puede cambiar en su perfil. |
 | Franja superior negra con el logo | El logo del Interact2Hack solo funciona sobre fondos oscuros (brandboard). Mantiene la identidad del evento en un tema claro. |
-| Morado profundo como color de acción | Blanco sobre morado profundo da 8,54:1; el morado neón del brandboard da solo 3,4:1 con blanco. |
+| Morado profundo como acción en claro, morado claro en oscuro | Blanco sobre morado profundo da 8,54:1 (el morado neón del brandboard da solo 3,4:1 con blanco). En oscuro, el morado claro `#B794FF` con texto negro da 8,29:1. |
 | Sora para el texto y Big Shoulders Display solo para títulos de pantalla y cifras | Es el par del brandboard. Big Shoulders pierde legibilidad por debajo de 24 px, por eso solo de 28 px en adelante y en mayúsculas. |
 | Cada estado con icono y texto | La crítica C-1 mostró que «Pendiente» y «En ejecución» se distinguían casi solo por el color. |
+| «Sin responsables» como marca y no como sexto estado | El cliente definió cinco estados. Una tarea sin dueño que ya venció es «Vencida» (PRD R9) y lleva esta marca para que el administrador la vea. |
+| Aviso al administrador si asigna dos tareas a la misma hora | PRD R29: avisa, no bloquea, porque la tarea solo tiene hora límite. |
 | «Finalizar tarea» deshabilitado hasta marcar todo | Es la regla R14 hecha visible: el botón dice cuántos pasos faltan. |
 | Confirmación con ventana, no con deslizador | El deslizador no se puede usar con teclado ni lector de pantalla (crítica C-9). |
 | Tarjetas en el celular y en el tablero | La tarjeta es el componente central en ambos perfiles (PRD R22); cambia la cantidad por fila. |
@@ -53,6 +58,8 @@ El proceso que llevó a estas decisiones está en `docs/diseno/brief.md` y `docs
 Todos los tokens vivirán en `src/styles/tokens.css`, dentro de `:root`. Ningún otro archivo escribe un color, una fuente o un tamaño literal.
 
 ### 5.1 Color
+
+Los valores de esta sección son del **tema claro**. Los del tema oscuro están en §5.2; los nombres de token son los mismos.
 
 **Base**
 
@@ -67,7 +74,11 @@ Todos los tokens vivirán en `src/styles/tokens.css`, dentro de `:root`. Ningún
 | `--color-texto-suave` | `#5D5568` | Texto secundario y etiquetas de campo |
 | `--color-acento` | `#5B2BB5` | Botón primario, enlaces, anillo de foco, barra de progreso |
 | `--color-sobre-acento` | `#FFFFFF` | Texto sobre el acento |
-| `--color-franja` | `#050307` | Franja superior con el logo |
+| `--color-franja` | `#050307` | Franja superior con el logo, barra inferior del celular y panel de indicadores |
+| `--color-sobre-franja` | `#FFFFFF` | Texto sobre la franja y los bloques negros |
+| `--color-sobre-franja-suave` | `#B8AFC8` | Texto secundario sobre negro |
+| `--color-acento-franja` | `#5CF000` | Lima de acento sobre negro (cifras, opción activa) |
+| `--color-riel-franja` | `#2A2236` | Riel de barras de progreso sobre negro |
 
 **Estados de una tarea (PRD R9)**
 
@@ -83,11 +94,41 @@ Todos los tokens vivirán en `src/styles/tokens.css`, dentro de `:root`. Ningún
 
 | Token | Valor | Uso |
 | --- | --- | --- |
-| `--color-por-vencer` | `#FFC857` | Fondo del aviso «vence en menos de 1 hora» (PRD R19). Texto `--color-texto`. Es un aviso, no un sexto estado. |
+| `--color-por-vencer` | `#FFC857` | Fondo del aviso «vence en menos de 1 hora» (PRD R19). Texto `--color-sobre-aviso` (`#0B0612` en los dos temas). Es un aviso, no un sexto estado. |
 | `--color-en-edicion` | `#EDE8F7` | Insignia «En edición» (R13), con icono de candado y texto `--color-texto`. |
-| `--color-urgente` | `#0B0612` | Fondo de la marca «Urgente» (R17), con texto `#FFFFFF` y icono de rayo. |
+| `--color-urgente` | `#0B0612` | Fondo de la marca «Urgente» (R17), con texto `--color-sobre-urgente` (`#FFFFFF`) y icono de rayo. |
+| `--color-sin-responsables` | `#EDE8F7` | Fondo de la marca «Sin responsables» (S-15), con texto `--color-texto`, borde `--color-borde-control` e icono de persona con signo de interrogación. |
+| `--color-atencion` | `#FFC857` | Fondo del aviso al administrador cuando asigna dos tareas a la misma hora (R29). Texto `--color-sobre-aviso`. |
 
-### 5.2 Tipografía
+### 5.2 Tema oscuro
+
+Se activa con el atributo `data-tema="oscuro"` en la raíz, o por la preferencia del sistema (`prefers-color-scheme: dark`) cuando el usuario no escogió un tema. El atributo `data-tema="claro"` fuerza el claro. Solo cambian los valores; ninguno de los demás tokens (tipografía, espaciado, radios, movimiento) cambia.
+
+| Token | Valor oscuro |
+| --- | --- |
+| `--color-fondo` | `#0E0A16` |
+| `--color-superficie` | `#17111F` |
+| `--color-superficie-alta` | `#231A30` |
+| `--color-borde` | `#3A2F4A` |
+| `--color-borde-control` | `#8F86A0` |
+| `--color-texto` | `#F5F2FA` |
+| `--color-texto-suave` | `#B8AFC8` |
+| `--color-acento` | `#B794FF` |
+| `--color-sobre-acento` | `#0B0612` |
+| `--color-franja` | `#050307` (igual; en oscuro lleva un borde inferior de 1 px `--color-borde`) |
+| `--color-no-asignado-fondo` / `--color-no-asignado` | `#2A2236` / `#CFC6DD` |
+| `--color-pendiente` / `--color-sobre-pendiente` | `#B794FF` / `#0B0612` |
+| `--color-en-ejecucion` / `--color-sobre-en-ejecucion` | `#5CF000` / `#0B0612` |
+| `--color-completada` / `--color-sobre-completada` | `#52D982` / `#0B0612` |
+| `--color-vencida` / `--color-sobre-vencida` | `#FF6B61` / `#0B0612` |
+| `--color-por-vencer` y `--color-atencion` | `#FFC857` (igual; el texto `--color-sobre-aviso` también es `#0B0612`) |
+| `--color-en-edicion` | `#231A30` |
+| `--color-urgente` / `--color-sobre-urgente` | `#F5F2FA` / `#0B0612` |
+| `--color-sin-responsables` | `#231A30` |
+
+El interruptor de tema vive en Perfil (celular) y en el menú lateral (escritorio): tres opciones, «Automático», «Claro» y «Oscuro». La elección se guarda en el dispositivo.
+
+### 5.3 Tipografía
 
 | Token | Valor |
 | --- | --- |
@@ -104,7 +145,7 @@ Todos los tokens vivirán en `src/styles/tokens.css`, dentro de `:root`. Ningún
 | `--texto-etiqueta` | 14 / 16 px | 600 | Insignias, botones, etiquetas de campo |
 | `--texto-navegacion` | 12 / 16 px | 600 | Barra inferior del celular |
 
-### 5.3 Espaciado, radios y bordes
+### 5.4 Espaciado, radios y bordes
 
 | Token | Valor |
 | --- | --- |
@@ -118,7 +159,7 @@ Todos los tokens vivirán en `src/styles/tokens.css`, dentro de `:root`. Ningún
 | `--alto-tactil` | 44 px |
 | `--alto-boton` | 48 px |
 
-### 5.4 Movimiento
+### 5.5 Movimiento
 
 | Token | Valor | Uso |
 | --- | --- | --- |
@@ -132,13 +173,13 @@ Con `prefers-reduced-motion: reduce`, todas las duraciones pasan a 0.
 
 | Ancho | Comportamiento |
 | --- | --- |
-| Hasta 640 px (celular, staff) | Una columna. Franja negra con el logo arriba. Barra inferior con tres destinos de 56 px de alto: Mis tareas, Historial, Perfil. El aviso de vencimiento y el de falta de conexión van entre la franja y el contenido. |
+| Hasta 640 px (celular, staff) | Una columna. Franja negra con el logo arriba. Barra inferior negra (`--color-franja`) con tres destinos de 56 px de alto: Mis tareas, Historial, Perfil. El destino activo va en `--color-acento-franja`. El aviso de vencimiento y el de falta de conexión van entre la franja y el contenido. |
 | 641 a 1023 px | Dos columnas de tarjetas. |
-| 1024 px o más (administrador) | Contenedor de 1200 px máximo. Menú lateral. El tablero muestra tarjetas de 3 o 4 por fila, con los Indicadores del tablero arriba. |
+| 1024 px o más (administrador) | Contenedor de 1200 px máximo. Menú lateral negro. El tablero muestra tarjetas de 3 o 4 por fila, con el panel de Indicadores del tablero arriba. |
 
 Márgenes laterales: `--espacio-4` en celular y `--espacio-6` en escritorio. Sin desplazamiento horizontal a 390 px.
 
-**Tablero del administrador (PRD R22).** Grupos en este orden, cada uno con un encabezado que lleva su nombre y la cantidad: Vencidas, Próximas a vencer, En ejecución, Pendientes, Sin asignar y Completadas. Completadas va al final, plegado, y se abre al tocarlo.
+**Tablero del administrador (PRD R22).** Grupos en este orden, cada uno con un encabezado que lleva su nombre y la cantidad: Vencidas, Próximas a vencer, En ejecución, Pendientes, Sin asignar y Completadas. Completadas va al final, plegado, y se abre al tocarlo. Una tarea sin asignar a la que le falta menos de 1 hora va en Próximas a vencer, y una vencida sin responsables va en Vencidas con su marca (PRD R22, S-11, S-15).
 
 ## 7. Componentes
 
@@ -158,15 +199,16 @@ Etiqueta arriba en `--texto-etiqueta` y `--color-texto-suave`. Campo con borde `
 
 - **Campo de texto** (nombre, correo, teléfono, título, observaciones).
 - **Selector de lugar:** lista, no texto libre (R8).
-- **Selector de responsables:** muestra solo a los disponibles (R5); si no hay ninguno, dice «Nadie está disponible a esa hora».
-- **Disponibilidad:** días y rango de horas por estudiante.
+- **Selector de responsables:** muestra solo a los disponibles (R5); si no hay ninguno, dice «Nadie está disponible a esa hora». Si el estudiante elegido ya tiene otra tarea que vence a la misma hora, aparece debajo el Aviso de atención (§7.6) y el botón sigue activo (R29).
+- **Disponibilidad:** días y un solo rango de horas por día (S-25).
+- **Entrega de credenciales:** al crear un usuario, el administrador elige «Enviar por correo» o «Se las doy yo» (R4).
 - **Casilla «Urgente».**
 
 Estados: normal, foco (anillo), con error (borde y mensaje en `--color-vencida`, con el mensaje debajo y enlazado con `aria-describedby`), deshabilitado, bloqueado (cuando la tarea está en ejecución o en edición: campos de solo lectura con el motivo).
 
 ### 7.3 Insignia de estado
 
-Píldora (`--radio-pildora`) con icono y texto, en los colores de §5.1. Una por tarea. Estados: No asignado, Pendiente, En ejecución, Completada, Vencida. Marcas adicionales: «En edición» (candado) y «Urgente» (rayo). El texto siempre está visible; el icono es decorativo (`aria-hidden`).
+Píldora (`--radio-pildora`) con icono y texto, en los colores de §5.1. Una por tarea. Estados: No asignado, Pendiente, En ejecución, Completada, Vencida. Marcas adicionales: «En edición» (candado), «Urgente» (rayo) y «Sin responsables» (persona con interrogación, con borde `--color-borde-control`). El texto siempre está visible; el icono es decorativo (`aria-hidden`).
 
 ### 7.4 Tarjeta de tarea
 
@@ -175,7 +217,7 @@ Superficie blanca, borde `--color-borde`, `--radio-control`.
 - **Staff (celular):** arriba la Insignia de estado. Después el título en `--texto-seccion`, el lugar y la hora límite en `--texto-pequeno`, el contador de tiempo restante (R21) y, al abrirla, los compañeros con su enlace para llamar. Toda la tarjeta es tocable.
 - **Administrador (tablero):** igual, más la línea «Responsables» con sus nombres, o «Sin responsables». Si la ejecuta alguien, dice «Ejecuta: [nombre]».
 
-Estados: pendiente, en ejecución, completada, vencida (borde izquierdo `--borde-estado` en `--color-vencida`), por vencer (el aviso ámbar aparece arriba de la lista del staff y la hora límite va en negrita), bloqueada (en ejecución o en edición: candado y sin acciones de edición).
+Estados: pendiente, en ejecución, completada, vencida (borde izquierdo `--borde-estado` en `--color-vencida`; si no tiene responsables, además la marca «Sin responsables»), por vencer (el aviso ámbar aparece arriba de la lista del staff y la hora límite va en negrita), bloqueada (en ejecución o en edición: candado y sin acciones de edición).
 
 ### 7.5 Ítem de checklist
 
@@ -189,12 +231,13 @@ Bloque con icono y texto, en la parte superior de la pantalla y con `role="statu
 
 | Tipo | Fondo | Texto | Icono |
 | --- | --- | --- | --- |
-| Por vencer (R19) | `--color-por-vencer` | `--color-texto` | reloj de arena |
+| Por vencer (R19) | `--color-por-vencer` | `--color-sobre-aviso` | reloj de arena |
 | Sin conexión (R27) | `--color-vencida` | `--color-sobre-vencida` | wifi tachado |
+| Atención al asignar (R29) | `--color-atencion` | `--color-sobre-aviso` | signo de exclamación |
 | Éxito | `--color-completada` | `--color-sobre-completada` | marca de verificación |
 | Error | `--color-vencida` | `--color-sobre-vencida` | triángulo de alerta |
 
-El aviso «Sin conexión a internet» se queda mientras no haya red y desaparece solo al volver.
+El aviso «Sin conexión a internet» se queda mientras no haya red y desaparece solo al volver. El aviso de atención dice, por ejemplo, «Ana Torres ya tiene otra tarea que vence a las 08:30». Es informativo: no impide asignar.
 
 ### 7.7 Ventana de confirmación
 
@@ -202,7 +245,7 @@ Aparece al presionar «Finalizar tarea» (R14). Fondo `--color-superficie`, `--r
 
 ### 7.8 Indicador del tablero
 
-Para el tablero del administrador (R22). Una fila de indicadores, uno por estado: la cifra en `--texto-cifra` y debajo el nombre del estado con su icono. Ejemplo: «5» y «Completadas». Un indicador con 0 se muestra igual, con la cifra en `--color-texto-suave`. Si hay tareas vencidas, el indicador de Vencidas lleva el fondo `--color-vencida` con texto blanco. Junto a los indicadores va el resumen «5 de 10 completadas» con una barra de progreso en `--color-acento`.
+Para el tablero del administrador (R22). Es un panel negro (`--color-franja`, con `--radio-control`) con una fila de indicadores, uno por estado: la cifra en `--texto-cifra` y `--color-sobre-franja`, y debajo el nombre del estado con su icono en `--color-sobre-franja-suave`. Ejemplo: «5» y «Completadas». Un indicador con 0 se muestra igual, con la cifra en `--color-sobre-franja-suave`. Si hay tareas vencidas, el indicador de Vencidas lleva el fondo `--color-vencida` con texto `--color-sobre-vencida`. Abajo va el resumen «5 de 10 completadas» con una barra en `--color-acento-franja` sobre `--color-riel-franja`.
 
 ### 7.9 Estados de pantalla
 
@@ -215,7 +258,9 @@ Para el tablero del administrador (R22). Una fila de indicadores, uno por estado
 
 ## 8. Accesibilidad
 
-Todos los valores se calcularon con la fórmula de contraste de WCAG 2.1.
+Todos los valores se calcularon con la fórmula de contraste de WCAG 2.1, para los dos temas.
+
+**Tema claro**
 
 | Par | Contraste | Mínimo |
 | --- | --- | --- |
@@ -240,12 +285,40 @@ Todos los valores se calcularon con la fórmula de contraste de WCAG 2.1.
 | Por vencer (tinta sobre ámbar) | 13,01:1 | 4,5:1 |
 | `--color-vencida` sobre `--color-superficie` (borde de tarjeta) | 6,54:1 | 3:1 |
 | Blanco sobre `--color-franja` | 20,54:1 | 4,5:1 |
+| `--color-sobre-franja-suave` sobre `--color-franja` | 9,78:1 | 4,5:1 |
+| `--color-acento-franja` (lima) sobre `--color-franja` | 13,61:1 | 4,5:1 |
+| `--color-acento-franja` sobre `--color-riel-franja` (barra de progreso) | 10,08:1 | 3:1 |
 
-No se usan, porque no cumplen: el lima sobre blanco (1,51:1) y el ámbar sobre blanco (1,54:1) como texto o borde; el borde `--color-borde` (1,43:1) nunca se usa como borde de un control.
+**Tema oscuro**
+
+| Par | Contraste | Mínimo |
+| --- | --- | --- |
+| `--color-texto` sobre `--color-fondo` | 17,66:1 | 4,5:1 |
+| `--color-texto` sobre `--color-superficie` | 16,69:1 | 4,5:1 |
+| `--color-texto` sobre `--color-superficie-alta` | 15,03:1 | 4,5:1 |
+| `--color-texto-suave` sobre `--color-fondo` | 9,32:1 | 4,5:1 |
+| `--color-texto-suave` sobre `--color-superficie` | 8,80:1 | 4,5:1 |
+| `--color-texto-suave` sobre `--color-superficie-alta` | 7,93:1 | 4,5:1 |
+| `--color-acento` sobre `--color-fondo` | 8,10:1 | 4,5:1 |
+| `--color-acento` sobre `--color-superficie` | 7,65:1 | 4,5:1 |
+| `--color-sobre-acento` sobre `--color-acento` | 8,29:1 | 4,5:1 |
+| `--color-borde-control` sobre `--color-fondo` | 5,67:1 | 3:1 |
+| `--color-borde-control` sobre `--color-superficie` | 5,36:1 | 3:1 |
+| `--color-borde-control` sobre `--color-superficie-alta` | 4,82:1 | 3:1 |
+| `--color-acento` sobre `--color-borde` (barra de progreso) | 5,16:1 | 3:1 |
+| No asignado (texto sobre su fondo) | 9,25:1 | 4,5:1 |
+| Pendiente (tinta sobre morado claro) | 8,29:1 | 4,5:1 |
+| En ejecución (tinta sobre lima) | 13,27:1 | 4,5:1 |
+| Completada (tinta sobre verde claro) | 11,06:1 | 4,5:1 |
+| Vencida (tinta sobre rojo claro) | 7,18:1 | 4,5:1 |
+| Por vencer (tinta sobre ámbar) | 13,01:1 | 4,5:1 |
+| `--color-vencida` sobre `--color-superficie` (borde de tarjeta) | 6,62:1 | 3:1 |
+
+No se usan, porque no cumplen: el lima sobre blanco (1,51:1) y el ámbar sobre blanco (1,54:1) como texto o borde; el borde `--color-borde` (1,43:1) nunca se usa como borde de un control. El lima sí se usa sobre negro, donde da 13,61:1.
 
 Además:
 
-- **Foco visible** en todo elemento interactivo: anillo de 3 px en `--color-acento` con 2 px de separación.
+- **Foco visible** en todo elemento interactivo, en los dos temas: anillo de 3 px en `--color-acento` con 2 px de separación. Sobre los bloques negros del tema claro, el anillo va en `--color-acento-franja`.
 - **Áreas táctiles** de al menos 44 × 44 px; botones principales y filas de checklist de 48 px.
 - **Ningún estado depende solo del color:** todos llevan icono y texto.
 - **Formularios:** todo campo tiene etiqueta visible; los errores se asocian con `aria-describedby`.
@@ -257,27 +330,31 @@ Además:
 
 - El logo va solo sobre la franja negra `--color-franja`, nunca sobre un fondo claro, a un ancho mínimo de 96 px y con un margen de protección igual a la altura del «2».
 - No se deforma, no se rota ni se le cambian los colores.
-- Los colores de marca se usan con los roles de §5.1: morado profundo para la acción, lima para «En ejecución».
+- Los colores de marca se usan con los roles de §5.1: morado profundo para la acción, lima para «En ejecución» y, sobre negro, como acento.
+- El logo va en blanco sobre la franja negra en los dos temas.
 
 ## 10. Reglas para el agente
 
 **DEBE:**
 
 - Leer este archivo antes de cualquier tarea que toque la interfaz.
-- Usar solo los tokens de §5, por su nombre.
+- Usar solo los tokens de §5, por su nombre, y probar cada pantalla en los dos temas.
 - Mostrar cada estado de una tarea con la Insignia de estado (icono y texto).
 - Deshabilitar «Finalizar tarea» hasta que todos los pasos estén marcados, y escribir cuántos faltan.
 - Pedir confirmación con la Ventana de §7.7 antes de completar una tarea.
-- Mostrar el aviso de §7.6 cuando falte menos de 1 hora y cuando no haya conexión.
+- Mostrar el aviso de §7.6 cuando falte menos de 1 hora, cuando no haya conexión y cuando el administrador asigne dos tareas a la misma hora.
+- Deshabilitar el marcado de pasos, guardar y finalizar cuando no haya conexión, con el motivo escrito (R27).
 - Diseñar y probar primero a 390 px.
 - Mantener el orden y los grupos del tablero de §6.
 
 **NO DEBE:**
 
 - Escribir colores, fuentes o tamaños literales fuera del archivo de tokens.
-- Usar lima o ámbar como color de texto o de borde sobre fondo claro.
+- Usar lima o ámbar como color de texto o de borde sobre fondo claro (sobre negro, el lima sí).
+- Bloquear la asignación cuando hay dos tareas a la misma hora: solo se avisa (R29).
+- Crear un sexto estado para «Sin responsables»: es una marca.
 - Usar Big Shoulders Display por debajo de 28 px.
-- Añadir sombras, degradados o animaciones que no estén en §5.4.
+- Añadir sombras, degradados o animaciones que no estén en §5.5.
 - Usar un deslizador para confirmar.
 - Instalar librerías de estilos o de componentes.
 - Cambiar textos de la herramienta: vienen del PRD y de las specs.
@@ -295,13 +372,19 @@ Además:
 | D-07 | Todo elemento interactivo tiene foco visible. | Recorrer la pantalla con Tab: cada elemento muestra el anillo de foco. |
 | D-08 | Las áreas táctiles miden al menos 44 px; los botones principales y las filas de checklist, 48 px. | En las herramientas del navegador, esos elementos miden lo indicado de alto. |
 | D-09 | No hay desplazamiento horizontal a 390 px. | `document.documentElement.scrollWidth` es 390 en una ventana de 390 px. |
-| D-10 | El tablero muestra los grupos en el orden de §6, con las completadas plegadas. | Con tareas de todos los estados, el orden en pantalla es el de §6 y Completadas aparece cerrado. |
+| D-10 | El tablero muestra los grupos en el orden de §6, con las completadas plegadas. | Con tareas de todos los estados, el orden en pantalla es el de §6 y Completadas aparece cerrado. Una sin asignar a 30 minutos de vencer sale en Próximas a vencer. |
 | D-11 | A una tarea con menos de 1 hora se le muestra el aviso arriba, con `role="status"`. | Con una tarea que vence en 30 minutos, el aviso ámbar aparece en la parte superior y tiene ese atributo. |
-| D-12 | Sin conexión: aviso arriba y guardar y finalizar deshabilitados con el motivo escrito. | En las herramientas del navegador, poner la red en «Sin conexión»: aparece el aviso y los botones se deshabilitan. |
-| D-13 | Cada par de §8 cumple su contraste mínimo. | Con las herramientas de contraste del navegador, cada par tiene al menos el valor de la tabla. |
+| D-12 | Sin conexión: aviso arriba, y marcar pasos, guardar y finalizar deshabilitados con el motivo escrito. | En las herramientas del navegador, poner la red en «Sin conexión»: aparece el aviso y los controles se deshabilitan. |
+| D-13 | Cada par de §8 cumple su contraste mínimo, en el tema claro y en el oscuro. | Con las herramientas de contraste del navegador, en cada tema, cada par tiene al menos el valor de la tabla. |
 | D-14 | Big Shoulders Display solo se usa en 28 px o más y en mayúsculas. | En las herramientas del navegador, todo texto con esa fuente calculada mide 28 px o más. |
 | D-15 | Con movimiento reducido no hay transiciones. | Activar «reducir movimiento» en el sistema: las duraciones calculadas son 0. |
 | D-16 | El logo está sobre la franja negra y mide al menos 96 px de ancho. | En el navegador, el logo está dentro de un contenedor con `--color-franja` y su ancho es 96 px o más. |
 | D-17 | No hay sombras ni degradados decorativos. | `grep -rnE "box-shadow\|gradient" src \| grep -v tokens.css` no devuelve nada (el anillo de foco no usa sombra). |
 | D-18 | El teléfono de un compañero es un enlace `tel:` de al menos 44 × 44 px. | En el navegador, el enlace tiene `href` que empieza con `tel:` y esa área táctil. |
 | D-19 | La tarea muestra el tiempo restante hasta su hora límite al abrirla. | Al abrir una tarea que vence en 30 minutos, se ve el contador. |
+| D-20 | Existen los dos temas, y todos los tokens de color tienen valor en ambos. | `tokens.css` tiene un bloque `:root` y un bloque `[data-tema="oscuro"]` con los mismos nombres de token. |
+| D-21 | El tema sigue la preferencia del sistema y el usuario lo puede cambiar. | Con el sistema en oscuro, la herramienta abre en oscuro; en Perfil, elegir «Claro» la cambia y la elección sigue al recargar. |
+| D-22 | Una tarea vencida sin responsables muestra la marca «Sin responsables» y está en el grupo Vencidas. | Con una tarea sin asignar cuya hora ya pasó, aparece en Vencidas con insignia «Vencida» y la marca. |
+| D-23 | Al asignar a un estudiante que ya tiene una tarea a la misma hora, aparece el aviso de atención y el botón de guardar sigue activo. | Asignar dos tareas que vencen a la misma hora al mismo estudiante. |
+| D-24 | En el tema claro, la barra inferior del celular y el panel de indicadores son negros. | En el navegador, su fondo calculado es el de `--color-franja`. |
+| D-25 | Al crear un usuario, el administrador puede elegir cómo se entregan las credenciales. | En el formulario aparecen las opciones «Enviar por correo» y «Se las doy yo». |
