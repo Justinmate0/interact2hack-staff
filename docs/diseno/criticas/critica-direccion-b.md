@@ -12,7 +12,7 @@ Justin eligió la B entre las tres direcciones (`direcciones.html`). Razones que
 
 Costo que se acepta: pierde parte del ambiente nocturno del evento.
 
-**Razón de Justin:** (pendiente: Justin la escribe con sus palabras antes de entregar).
+**Razón de Justin:** elegí este estilo porque quería un poco más de diseño en la app, o sea, un dinamismo entre blanco y negro y arriesgar a ver cómo se ve un tono claro con los mismos colores del Interact2Hack. Solo negro es muy básico. Por eso también va el modo oscuro, para gusto de cada usuario, porque con la luz o con una pantalla de celular no tan buena las notificaciones pueden no verse bien. Como se va a usar sobre todo en el celular, tiene que funcionar así.
 
 // Cómo se hizo la crítica
 No se pudo correr `/impeccable` en este entorno. La crítica (usabilidad) y la auditoría (accesibilidad) se hicieron a mano sobre la tarjeta de la B: se midió cada par de colores con la fórmula de contraste de WCAG 2.1 y se revisaron el tamaño de los controles, el foco y los estados. Cada hallazgo se clasificó como aceptado o rechazado, con su razón.
@@ -62,3 +62,5 @@ Justin vio el brand board y sintió que la B, tal cual, no se parecía lo sufici
 | A-10 | Sobre los bloques negros del tema claro el anillo de foco morado se ve poco. | Aceptado | Ahí el anillo va en lima (`--color-acento-franja`). |
 | A-11 | El texto de los avisos ámbar cambiaba de color con el tema. | Aceptado | Token propio `--color-sobre-aviso` (`#0B0612` en los dos temas). |
 | A-12 | El borde de campos en oscuro. | Aceptado | `#8F86A0`: 5,67:1 sobre el fondo, 5,36:1 sobre la superficie y 4,82:1 sobre la superficie alta. |
+| C-18 | Los iconos eran emojis y símbolos de texto (⏳, ⚡, 🔒, ▲). | Aceptado (Justin) | Se cambian por círculos en SVG, todos de la misma familia: vacío, medio lleno, con punto que parpadea, con visto, con equis, con raya, relleno, punteado, con manecillas y con exclamación. Nada de emojis en ninguna parte. |
+| C-19 | Todos los iconos parpadeando o ninguno. | Rechazado | Si todo parpadea no se nota nada. Solo parpadea el punto de «En ejecución» y, con movimiento reducido, se queda fijo. |

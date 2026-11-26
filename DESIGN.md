@@ -84,20 +84,20 @@ Los valores de esta sección son del **tema claro**. Los del tema oscuro están 
 
 | Estado | Fondo | Texto e icono | Icono |
 | --- | --- | --- | --- |
-| No asignado | `--color-no-asignado-fondo` `#ECEAF0` | `--color-no-asignado` `#4A4358` | círculo vacío |
-| Pendiente | `--color-pendiente` `#5B2BB5` | `--color-sobre-pendiente` `#FFFFFF` | reloj |
-| En ejecución | `--color-en-ejecucion` `#5CF000` | `--color-sobre-en-ejecucion` `#0B0612` | círculo con punto |
-| Completada | `--color-completada` `#1E6B3A` | `--color-sobre-completada` `#FFFFFF` | marca de verificación |
-| Vencida | `--color-vencida` `#B3261E` | `--color-sobre-vencida` `#FFFFFF` | triángulo de alerta |
+| No asignado | `--color-no-asignado-fondo` `#ECEAF0` | `--color-no-asignado` `#4A4358` | círculo vacío (solo el contorno) |
+| Pendiente | `--color-pendiente` `#5B2BB5` | `--color-sobre-pendiente` `#FFFFFF` | círculo medio lleno |
+| En ejecución | `--color-en-ejecucion` `#5CF000` | `--color-sobre-en-ejecucion` `#0B0612` | círculo con un punto al centro que parpadea |
+| Completada | `--color-completada` `#1E6B3A` | `--color-sobre-completada` `#FFFFFF` | círculo con visto |
+| Vencida | `--color-vencida` `#B3261E` | `--color-sobre-vencida` `#FFFFFF` | círculo con equis |
 
 **Avisos y marcas**
 
 | Token | Valor | Uso |
 | --- | --- | --- |
 | `--color-por-vencer` | `#FFC857` | Fondo del aviso «vence en menos de 1 hora» (PRD R19). Texto `--color-sobre-aviso` (`#0B0612` en los dos temas). Es un aviso, no un sexto estado. |
-| `--color-en-edicion` | `#EDE8F7` | Insignia «En edición» (R13), con icono de candado y texto `--color-texto`. |
-| `--color-urgente` | `#0B0612` | Fondo de la marca «Urgente» (R17), con texto `--color-sobre-urgente` (`#FFFFFF`) y icono de rayo. |
-| `--color-sin-responsables` | `#EDE8F7` | Fondo de la marca «Sin responsables» (S-15), con texto `--color-texto`, borde `--color-borde-control` e icono de persona con signo de interrogación. |
+| `--color-en-edicion` | `#EDE8F7` | Insignia «En edición» (R13), con icono de círculo con una raya al centro y texto `--color-texto`. |
+| `--color-urgente` | `#0B0612` | Fondo de la marca «Urgente» (R17), con texto `--color-sobre-urgente` (`#FFFFFF`) y icono de círculo relleno. |
+| `--color-sin-responsables` | `#EDE8F7` | Fondo de la marca «Sin responsables» (S-15), con texto `--color-texto`, borde `--color-borde-control` e icono de círculo de contorno punteado. |
 | `--color-atencion` | `#FFC857` | Fondo del aviso al administrador cuando asigna dos tareas a la misma hora (R29). Texto `--color-sobre-aviso`. |
 
 ### 5.2 Tema oscuro
@@ -166,8 +166,29 @@ El interruptor de tema vive en Perfil (celular) y en el menú lateral (escritori
 | `--curva` | `cubic-bezier(0.16, 1, 0.3, 1)` | La del brandboard |
 | `--duracion-rapida` | 120 ms | Cambios de color al tocar o enfocar |
 | `--duracion-media` | 200 ms | Aparición de avisos y de la ventana de confirmación |
+| `--pulso` | 1400 ms, ritmo suave, infinito | Solo el punto del icono «En ejecución» (opacidad de 100 % a 20 % y de vuelta) |
 
-Con `prefers-reduced-motion: reduce`, todas las duraciones pasan a 0.
+Con `prefers-reduced-motion: reduce`, todas las duraciones pasan a 0 y el punto no parpadea.
+
+### 5.6 Iconos
+
+Todos los iconos son **círculos** de 16 px, dibujados en SVG con trazo de 1,6 px y el color del texto que acompañan. No se usan emojis ni símbolos de texto en ningún lugar de la interfaz. Lo que cambia es lo que lleva el círculo por dentro, para que se distingan sin depender del color:
+
+| Icono | Dibujo | Dónde |
+| --- | --- | --- |
+| No asignado | Círculo vacío | Insignia de estado |
+| Pendiente | Círculo medio lleno | Insignia de estado |
+| En ejecución | Círculo con un punto al centro que parpadea | Insignia de estado |
+| Completada y éxito | Círculo con visto | Insignia y aviso de éxito |
+| Vencida y error | Círculo con equis | Insignia y aviso de error |
+| En edición | Círculo con una raya | Marca |
+| Urgente | Círculo relleno | Marca |
+| Sin responsables | Círculo de contorno punteado | Marca |
+| Por vencer | Círculo con manecillas | Aviso |
+| Sin conexión | Círculo con una diagonal | Aviso |
+| Atención al asignar | Círculo con exclamación | Aviso |
+
+Solo parpadea el punto de «En ejecución» (`--pulso`, ver §5.5): es lo único que está pasando en ese momento. Con `prefers-reduced-motion: reduce` el punto queda fijo y el icono se sigue distinguiendo por su dibujo. La casilla del checklist usa un visto simple, no un círculo.
 
 ## 6. Layout
 
@@ -208,7 +229,7 @@ Estados: normal, foco (anillo), con error (borde y mensaje en `--color-vencida`,
 
 ### 7.3 Insignia de estado
 
-Píldora (`--radio-pildora`) con icono y texto, en los colores de §5.1. Una por tarea. Estados: No asignado, Pendiente, En ejecución, Completada, Vencida. Marcas adicionales: «En edición» (candado), «Urgente» (rayo) y «Sin responsables» (persona con interrogación, con borde `--color-borde-control`). El texto siempre está visible; el icono es decorativo (`aria-hidden`).
+Píldora (`--radio-pildora`) con icono y texto, en los colores de §5.1. Una por tarea. Estados: No asignado, Pendiente, En ejecución, Completada, Vencida. Marcas adicionales: «En edición» (círculo con raya), «Urgente» (círculo relleno) y «Sin responsables» (círculo punteado, con borde `--color-borde-control`). El texto siempre está visible; el icono es decorativo (`aria-hidden`).
 
 ### 7.4 Tarjeta de tarea
 
@@ -231,11 +252,11 @@ Bloque con icono y texto, en la parte superior de la pantalla y con `role="statu
 
 | Tipo | Fondo | Texto | Icono |
 | --- | --- | --- | --- |
-| Por vencer (R19) | `--color-por-vencer` | `--color-sobre-aviso` | reloj de arena |
-| Sin conexión (R27) | `--color-vencida` | `--color-sobre-vencida` | wifi tachado |
-| Atención al asignar (R29) | `--color-atencion` | `--color-sobre-aviso` | signo de exclamación |
-| Éxito | `--color-completada` | `--color-sobre-completada` | marca de verificación |
-| Error | `--color-vencida` | `--color-sobre-vencida` | triángulo de alerta |
+| Por vencer (R19) | `--color-por-vencer` | `--color-sobre-aviso` | círculo con manecillas |
+| Sin conexión (R27) | `--color-vencida` | `--color-sobre-vencida` | círculo con diagonal |
+| Atención al asignar (R29) | `--color-atencion` | `--color-sobre-aviso` | círculo con exclamación |
+| Éxito | `--color-completada` | `--color-sobre-completada` | círculo con visto |
+| Error | `--color-vencida` | `--color-sobre-vencida` | círculo con equis |
 
 El aviso «Sin conexión a internet» se queda mientras no haya red y desaparece solo al volver. El aviso de atención dice, por ejemplo, «Ana Torres ya tiene otra tarea que vence a las 08:30». Es informativo: no impide asignar.
 
@@ -355,6 +376,7 @@ Además:
 - Crear un sexto estado para «Sin responsables»: es una marca.
 - Usar Big Shoulders Display por debajo de 28 px.
 - Añadir sombras, degradados o animaciones que no estén en §5.5.
+- Usar emojis o símbolos de texto como iconos: solo los círculos de §5.6.
 - Usar un deslizador para confirmar.
 - Instalar librerías de estilos o de componentes.
 - Cambiar textos de la herramienta: vienen del PRD y de las specs.
@@ -388,3 +410,4 @@ Además:
 | D-23 | Al asignar a un estudiante que ya tiene una tarea a la misma hora, aparece el aviso de atención y el botón de guardar sigue activo. | Asignar dos tareas que vencen a la misma hora al mismo estudiante. |
 | D-24 | En el tema claro, la barra inferior del celular y el panel de indicadores son negros. | En el navegador, su fondo calculado es el de `--color-franja`. |
 | D-25 | Al crear un usuario, el administrador puede elegir cómo se entregan las credenciales. | En el formulario aparecen las opciones «Enviar por correo» y «Se las doy yo». |
+| D-26 | No hay emojis ni símbolos de texto como iconos, y los de estado, marca y aviso son círculos. | Revisar el código: cada icono es un SVG de §5.6. Solo parpadea el punto de «En ejecución», y con movimiento reducido no parpadea. |
