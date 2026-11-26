@@ -88,7 +88,7 @@ El cliente no dio cifras de éxito. Las medidas de arriba se pueden comprobar en
 | --- | --- |
 | R7 | Una tarea tiene título (obligatorio) [SUPUESTO S-13], lugar, fecha y hora de vencimiento, checklist (pasos) y responsables. Los responsables pueden ser uno o varios, o ninguno: la tarea se puede guardar sin asignar. |
 | R8 | El lugar se escoge de una lista, no se escribe. La lista parte con cinco lugares: Casa Blanca, Salón Azul, Patio del Da Vinci, Teatro Calderón de la Barca y Teatro Shakespeare. Un administrador puede agregar más (por ejemplo, un aula específica). |
-| R9 | Una tarea está siempre en uno de cinco estados: **no asignado** (sin responsables; si llega a su hora límite, pasa a vencida y la tarjeta lleva la marca «Sin responsables» [SUPUESTO S-15]), **pendiente** (con responsables, sin empezar), **en ejecución**, **completada** y **vencida**. |
+| R9 | Una tarea está siempre en uno de cinco estados: **no asignado** (sin responsables; si llega a su hora límite, pasa a vencida y la tarjeta lleva la marca «Sin responsables» [SUPUESTO S-15]), **pendiente** (con responsables y sin empezar, o urgente abierta que nadie ha tomado [SUPUESTO S-20]), **en ejecución**, **completada** y **vencida**. |
 | R10 | Una tarea pasa a **en ejecución** cuando un estudiante marca el primer paso de su checklist. Solo abrirla no la cambia de estado. |
 | R11 | Un estudiante solo puede tener una tarea en ejecución a la vez. Para empezar otra, debe terminar la actual. Puede abrir otras tareas para verlas, pero no marcar pasos hasta terminar la actual. Si deja una tarea a medias, esta sigue en ejecución hasta que venza; al vencer pasa a vencida y el estudiante queda libre [SUPUESTO S-19]. |
 | R12 | Una tarea en ejecución queda bloqueada: ningún administrador puede editarla ni borrarla. |
@@ -126,12 +126,12 @@ El cliente no dio cifras de éxito. Las medidas de arriba se pueden comprobar en
 
 | Id | Épica | Descripción | Prioridad |
 | --- | --- | --- | --- |
-| E1 | Acceso y usuarios | Inicio de sesión con dos perfiles, administrador master y gestión de usuarios por los administradores. Incluye contraseña inicial, cambio de contraseña, recuperación por correo y cambio por un administrador. (R1–R4) | Must |
+| E1 | Acceso y usuarios | Inicio de sesión con dos perfiles, administrador master y gestión de usuarios por los administradores. Incluye contraseña inicial, entrega de credenciales por correo o en persona, cambio de contraseña, recuperación por correo y cambio por un administrador. (R1–R4) | Must |
 | E2 | Disponibilidad y lugares | El administrador define cuándo está disponible cada estudiante y mantiene la lista de lugares del evento. Así, las tareas solo se asignan a quien está y en lugares válidos. (R5, R6, R8) | Must |
 | E3 | Tareas y asignación | El administrador crea, edita y elimina tareas con su checklist, las asigna a uno o varios estudiantes o las marca como urgentes, y las reasigna si vencen. Respeta los bloqueos mientras alguien las ejecuta o las edita. (R7, R9, R12, R13, R17, R20, R29) | Must |
 | E4 | Ejecución de tareas | El estudiante, desde su celular, ve sus tareas, abre una, marca los pasos, deja observaciones y la finaliza con confirmación. Incluye el contador, los compañeros y el historial. (R10, R11, R14–R16, R18, R21, R25, R26) | Must |
 | E5 | Tablero de cumplimiento | Pantalla principal del administrador: tarjetas con estado y color, ordenadas por prioridad, con las completadas archivadas al final. (R22–R24) | Must |
-| E6 | Avisos y conexión | Aviso dentro de la app cuando una tarea está por vencer y aviso de falta de conexión que impide guardar. (R19, R27) | Must |
+| E6 | Avisos y conexión | Aviso dentro de la app cuando una tarea está por vencer, y aviso de falta de conexión que impide marcar pasos, guardar y finalizar. (R19, R27) | Must |
 | E7 | Evidencia y práctica | Adjuntar evidencia opcional al completar y un modo demo para que el staff practique antes del evento. (R28) | Could |
 
 ---
@@ -175,6 +175,7 @@ El cliente no dio cifras de éxito. Las medidas de arriba se pueden comprobar en
 - Si una tarea en ejecución tiene más gente de la necesaria y está bloqueada, ¿cómo se reduce? El cliente pidió el bloqueo (R12) y también que un administrador la edite.
 - Si cambia la disponibilidad de un estudiante, ¿qué pasa con las tareas que ya tenía asignadas? (R6)
 - ¿Una tarea completada puede reabrirse si se hizo mal? (S-16)
+- Cuando un responsable está ejecutando una tarea, ¿los demás la ven bloqueada con su nombre? (S-12)
 - ¿Cuántos estudiantes usarán la herramienta a la vez? No se habló y afecta el diseño de las listas.
 - Si hace falta pagar algún servicio de la herramienta, el cliente dijo que sería solo por un mes. No lo resolvemos aquí.
 

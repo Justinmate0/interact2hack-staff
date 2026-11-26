@@ -40,7 +40,7 @@ El proceso que llevó a estas decisiones está en `docs/diseno/brief.md` y `docs
 | --- | --- |
 | Tema claro por defecto, con fondo lila muy suave | El staff usa el celular de pie y a veces al aire libre, y el claro se lee mejor con luz fuerte. Fue la razón para elegir la dirección B (`criticas/critica-direccion-b.md`). |
 | Bloques negros dentro del tema claro | Un claro "a secas" no se sentía del Interact2Hack. La franja del logo, la barra inferior del celular y el panel de indicadores del tablero van en negro, con lima y blanco encima. |
-| Modo oscuro que sigue al sistema, con interruptor | El staff también trabaja de noche en el evento. El tema se toma de la preferencia del celular o la computadora, y el usuario lo puede cambiar en su perfil. |
+| Modo oscuro que sigue al sistema, con interruptor | Cada usuario tiene su gusto, y con poca luz o con una pantalla de celular no tan buena el claro puede no verse bien (razón de Justin en la crítica). El tema se toma de la preferencia del celular o la computadora, y el usuario lo puede cambiar en su perfil. |
 | Franja superior negra con el logo | El logo del Interact2Hack solo funciona sobre fondos oscuros (brandboard). Mantiene la identidad del evento en un tema claro. |
 | Morado profundo como acción en claro, morado claro en oscuro | Blanco sobre morado profundo da 8,54:1 (el morado neón del brandboard da solo 3,4:1 con blanco). En oscuro, el morado claro `#B794FF` con texto negro da 8,29:1. |
 | Sora para el texto y Big Shoulders Display solo para títulos de pantalla y cifras | Es el par del brandboard. Big Shoulders pierde legibilidad por debajo de 24 px, por eso solo de 28 px en adelante y en mayúsculas. |
@@ -55,7 +55,7 @@ El proceso que llevó a estas decisiones está en `docs/diseno/brief.md` y `docs
 
 ## 5. Tokens
 
-Todos los tokens vivirán en `src/styles/tokens.css`, dentro de `:root`. Ningún otro archivo escribe un color, una fuente o un tamaño literal.
+Todos los tokens vivirán en `src/styles/tokens.css`: los del tema claro dentro de `:root` y los del oscuro en `[data-tema="oscuro"]` (§5.2). Ningún otro archivo escribe un color, una fuente o un tamaño literal.
 
 ### 5.1 Color
 
@@ -237,6 +237,7 @@ Superficie blanca, borde `--color-borde`, `--radio-control`.
 
 - **Staff (celular):** arriba la Insignia de estado. Después el título en `--texto-seccion`, el lugar y la hora límite en `--texto-pequeno`, el contador de tiempo restante (R21) y, al abrirla, los compañeros con su enlace para llamar. Toda la tarjeta es tocable.
 - **Administrador (tablero):** igual, más la línea «Responsables» con sus nombres, o «Sin responsables». Si la ejecuta alguien, dice «Ejecuta: [nombre]».
+- **Urgente abierta:** lleva la insignia «Pendiente» y la marca «Urgente», y va en el grupo Pendientes, no en Sin asignar (PRD S-20).
 
 Estados: pendiente, en ejecución, completada, vencida (borde izquierdo `--borde-estado` en `--color-vencida`; si no tiene responsables, además la marca «Sin responsables»), por vencer (el aviso ámbar aparece arriba de la lista del staff y la hora límite va en negrita), bloqueada (en ejecución o en edición: candado y sin acciones de edición).
 
